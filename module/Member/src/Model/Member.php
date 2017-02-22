@@ -1,5 +1,5 @@
 <?php 
-namespace Album\Model;
+namespace Member\Model;
 
 use DomainException;
 use Zend\Filter\StringTrim;
@@ -10,28 +10,31 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\StringLength;
 
-class Album implements InputFilterAwareInterface
+class Member implements InputFilterAwareInterface
 {
 
     public $id;
-    public $artist;
-    public $title;
+    public $f_name;
+    public $l_name;
+    public $address;
 
     private $inputFilter;
 
     public function exchangeArray(array $data)
     {
         $this->id     = !empty($data['id']) ? $data['id'] : null;
-        $this->artist = !empty($data['artist']) ? $data['artist'] : null;
-        $this->title  = !empty($data['title']) ? $data['title'] : null;
+        $this->f_name = !empty($data['f_name']) ? $data['f_name'] : null;
+        $this->l_name  = !empty($data['l_name']) ? $data['l_name'] : null;
+        $this->address  = !empty($data['address']) ? $data['address'] : null;
     }
 
     public function getArrayCopy()
     {
         return [
             'id'     => $this->id,
-            'artist' => $this->artist,
-            'title'  => $this->title,
+            'f_name' => $this->f_name,
+            'l_name'  => $this->l_name,
+            'address'  => $this->address,
         ];
     }
     
@@ -60,7 +63,7 @@ class Album implements InputFilterAwareInterface
         ]);
 
         $inputFilter->add([
-            'name' => 'artist',
+            'name' => 'f_name',
             'required' => true,
             'filters' => [
                 ['name' => StripTags::class],
@@ -79,7 +82,26 @@ class Album implements InputFilterAwareInterface
         ]);
 
         $inputFilter->add([
-            'name' => 'title',
+            'name' => 'l_name',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => StringLength::class,
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'address',
             'required' => true,
             'filters' => [
                 ['name' => StripTags::class],

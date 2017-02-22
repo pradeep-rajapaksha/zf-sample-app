@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $title = 'My albums';
 $this->headTitle($title);
@@ -10,22 +10,20 @@ $this->headTitle($title);
 
 <table class="table">
 <tr>
+    <th>Id</th>
     <th>Title</th>
     <th>Artist</th>
     <th>&nbsp;</th>
 </tr>
-
-<?php if (!empty($albums)): ?>
-    <?php foreach ($albums as $album) : ?>
-        <tr>
-            <td><?= $this->escapeHtml($album->title) ?></td>
-            <td><?= $this->escapeHtml($album->artist) ?></td>
-            <td>
-                <a href="<?= $this->url('album', ['action' => 'edit', 'id' => $album->id]) ?>">Edit</a>
-                <a href="<?= $this->url('album', ['action' => 'delete', 'id' => $album->id]) ?>">Delete</a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-<?php endif ?>
-
+<?php foreach ($albums as $album) : ?>
+    <tr>
+        <td><?= $this->escapeHtml($album->id) ?></td>
+        <td><?= $this->escapeHtml($album->title) ?></td>
+        <td><?= $this->escapeHtml($album->artist) ?></td>
+        <td>
+            <a href="<?= $this->url('album', ['action' => 'edit', 'id' => $album->id]) ?>">Edit</a>
+            <a href="<?= $this->url('album', ['action' => 'delete', 'id' => $album->id]) ?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
 </table>

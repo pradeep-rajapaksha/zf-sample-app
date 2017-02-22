@@ -1,31 +1,38 @@
 <?php 
-namespace Album\Form;
+namespace Member\Form;
 
 use Zend\Form\Form;
 
-class AlbumForm extends Form
+class MemberForm extends Form
 {
     public function __construct($name = null)
     {
         // We will ignore the name provided to the constructor
-        parent::__construct('album');
+        parent::__construct('member');
 
         $this->add([
             'name' => 'id',
             'type' => 'hidden',
         ]);
         $this->add([
-            'name' => 'title',
+            'name' => 'f_name',
             'type' => 'text',
             'options' => [
-                'label' => 'Title',
+                'label' => 'First Name',
             ],
         ]);
         $this->add([
-            'name' => 'artist',
+            'name' => 'l_name',
             'type' => 'text',
             'options' => [
-                'label' => 'Artist',
+                'label' => 'Last Name',
+            ],
+        ]);
+        $this->add([
+            'name' => 'address',
+            'type' => 'text',
+            'options' => [
+                'label' => 'Address',
             ],
         ]);
         $this->add([

@@ -11,6 +11,9 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
+use Album\Controller\AlbumController;
+use Member\Controller\MemberController;
+
 return [
     'router' => [
         'routes' => [
@@ -19,7 +22,9 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        // 'controller' => Controller\IndexController::class,
+                        'controller' => AlbumController::class,
+                        // 'controller' => MemberController::class,
                         'action'     => 'index',
                     ],
                 ],

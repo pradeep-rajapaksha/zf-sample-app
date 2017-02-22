@@ -2,9 +2,9 @@
 	$title = 'Add new album';
 	$this->headTitle($title);
 ?>
-	<h1><?= $this->escapeHtml($title) ?></h1>
+<h1><?= $this->escapeHtml($title) ?></h1>
 <?php
-	// This provides a default CSS class and placeholder text for the title element:
+// This provides a default CSS class and placeholder text for the title element:
 	$album = $form->get('title');
 	$album->setAttribute('class', 'form-control');
 	$album->setAttribute('placeholder', 'Album title');
@@ -24,7 +24,7 @@
 	echo $this->form()->openTag($form);
 ?>
 <?php // Wrap the elements in divs marked as form groups, and render the
-	      // label, element, and errors separately within ?>
+      // label, element, and errors separately within ?>
 	<div class="form-group">
 	    <?= $this->formLabel($album) ?>
 	    <?= $this->formElement($album) ?>
@@ -38,6 +38,6 @@
 	</div>
 
 <?php
-	echo $this->formSubmit($submit);
-	echo $this->formHidden($form->get('id'));
-	echo $this->form()->closeTag();
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('id'));
+echo $this->form()->closeTag();

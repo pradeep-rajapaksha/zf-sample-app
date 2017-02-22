@@ -1,0 +1,54 @@
+<?php
+	$title = 'Add new member';
+	$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+// This provides a default CSS class and placeholder text for the title element:
+	$f_name = $form->get('f_name');
+	$f_name->setAttribute('class', 'form-control');
+	$f_name->setAttribute('placeholder', 'First Name');
+
+	// This provides a default CSS class and placeholder text for the member element:
+	$l_name = $form->get('l_name');
+	$l_name->setAttribute('class', 'form-control');
+	$l_name->setAttribute('placeholder', 'Last Name');
+
+	// This provides a default CSS class and placeholder text for the member element:
+	$address = $form->get('address');
+	$address->setAttribute('class', 'form-control');
+	$address->setAttribute('placeholder', 'Address');
+
+	// This provides CSS classes for the submit button:
+	$submit = $form->get('submit');
+	$submit->setAttribute('class', 'btn btn-primary');
+
+	$form->setAttribute('action', $this->url('member', ['action' => 'add']));
+	$form->prepare();
+
+	echo $this->form()->openTag($form);
+?>
+<?php // Wrap the elements in divs marked as form groups, and render the
+      // label, element, and errors separately within ?>
+	<div class="form-group">
+	    <?= $this->formLabel($f_name) ?>
+	    <?= $this->formElement($f_name) ?>
+	    <?= $this->formElementErrors()->render($f_name, ['class' => 'help-block']) ?>
+	</div>
+
+	<div class="form-group">
+	    <?= $this->formLabel($l_name) ?>
+	    <?= $this->formElement($l_name) ?>
+	    <?= $this->formElementErrors()->render($l_name, ['class' => 'help-block']) ?>
+	</div>
+
+	<div class="form-group">
+	    <?= $this->formLabel($address) ?>
+	    <?= $this->formElement($address) ?>
+	    <?= $this->formElementErrors()->render($address, ['class' => 'help-block']) ?>
+	</div>
+
+<?php
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('id'));
+echo $this->form()->closeTag();

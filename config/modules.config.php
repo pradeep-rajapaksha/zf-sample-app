@@ -12,13 +12,14 @@
  */
 return [
     'Zend\I18n',
-    'Zend\Form',
     'Zend\InputFilter',
     'Zend\Filter',
     'Zend\Hydrator',
+    'Zend\Form',
+    'Zend\Db',
     'Zend\Router',
     'Zend\Validator',
-    'Zend\Db',
     'Application',
     'Album',
+    'Member',
 ];

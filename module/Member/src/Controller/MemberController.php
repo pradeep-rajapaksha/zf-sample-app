@@ -1,18 +1,18 @@
 <?php 
-namespace Album\Controller;
+namespace Member\Controller;
 
-use Album\Form\AlbumForm;
-use Album\Model\Album;
-use Album\Model\AlbumTable;
+use Member\Form\MemberForm;
+use Member\Model\Member;
+use Member\Model\MemberTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class AlbumController extends AbstractActionController
+class MemberController extends AbstractActionController
 {
     
     private $table;
 
-    public function __construct(AlbumTable $table)
+    public function __construct(MemberTable $table)
     {
         $this->table = $table;
     }
@@ -20,12 +20,12 @@ class AlbumController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel([
-            'albums' => $this->table->fetchAll(),
+            'members' => $this->table->fetchAll(),
         ]);
     }
     public function addAction()
     {
-        $form = new AlbumForm();
+        $form = new MemberForm();
         $form->get('submit')->setValue('Add');
 
         $request = $this->getRequest();
@@ -34,17 +34,17 @@ class AlbumController extends AbstractActionController
             return ['form' => $form];
         }
 
-        $album = new Album();
-        $form->setInputFilter($album->getInputFilter());
+        $member = new Member();
+        $form->setInputFilter($member->getInputFilter());
         $form->setData($request->getPost());
 
         if (! $form->isValid()) {
             return ['form' => $form];
         }
 
-        $album->exchangeArray($form->getData());
-        $this->table->saveAlbum($album);
-        return $this->redirect()->toRoute('album');
+        $member->exchangeArray($form->getData());
+        $this->table->saveMember($member);
+        return $this->redirect()->toRoute('member');
     }
 
     public function editAction()
@@ -52,20 +52,20 @@ class AlbumController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
-            return $this->redirect()->toRoute('album', ['action' => 'add']);
+            return $this->redirect()->toRoute('member', ['action' => 'add']);
         }
 
-        // Retrieve the album with the specified id. Doing so raises
-        // an exception if the album is not found, which should result
+        // Retrieve the member with the specified id. Doing so raises
+        // an exception if the member is not found, which should result
         // in redirecting to the landing page.
         try {
-            $album = $this->table->getAlbum($id);
+            $member = $this->table->getMember($id);
         } catch (\Exception $e) {
-            return $this->redirect()->toRoute('album', ['action' => 'index']);
+            return $this->redirect()->toRoute('member', ['action' => 'index']);
         }
 
-        $form = new AlbumForm();
-        $form->bind($album);
+        $form = new MemberForm();
+        $form->bind($member);
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
@@ -75,24 +75,24 @@ class AlbumController extends AbstractActionController
             return $viewData;
         }
 
-        $form->setInputFilter($album->getInputFilter());
+        $form->setInputFilter($member->getInputFilter());
         $form->setData($request->getPost());
 
         if (! $form->isValid()) {
             return $viewData;
         }
 
-        $this->table->saveAlbum($album);
+        $this->table->saveMember($member);
 
-        // Redirect to album list
-        return $this->redirect()->toRoute('album', ['action' => 'index']);
+        // Redirect to member list
+        return $this->redirect()->toRoute('member', ['action' => 'index']);
     }
 
     public function deleteAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('album');
+            return $this->redirect()->toRoute('member');
         }
 
         $request = $this->getRequest();
@@ -101,16 +101,16 @@ class AlbumController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int) $request->getPost('id');
-                $this->table->deleteAlbum($id);
+                $this->table->deleteMember($id);
             }
 
-            // Redirect to list of albums
-            return $this->redirect()->toRoute('album');
+            // Redirect to list of members
+            return $this->redirect()->toRoute('member');
         }
 
         return [
             'id'    => $id,
-            'album' => $this->table->getAlbum($id),
+            'member' => $this->table->getMember($id),
         ];
     }
 }

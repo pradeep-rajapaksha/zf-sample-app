@@ -1,10 +1,10 @@
 <?php 
-namespace Album\Model;
+namespace Member\Model;
 
 use RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
-class AlbumTable
+class MemberTable
 {
     private $tableGateway;
 
@@ -18,7 +18,7 @@ class AlbumTable
         return $this->tableGateway->select();
     }
 
-    public function getAlbum($id)
+    public function getMember($id)
     {
         $id = (int) $id;
         $rowset = $this->tableGateway->select(['id' => $id]);
@@ -33,23 +33,24 @@ class AlbumTable
         return $row;
     }
 
-    public function saveAlbum(Album $album)
+    public function saveMember(Member $member)
     {
         $data = [
-            'artist' => $album->artist,
-            'title'  => $album->title,
+            'f_name' => $member->f_name,
+            'l_name' => $member->l_name,
+            'address'  => $member->address,
         ];
 
-        $id = (int) $album->id;
+        $id = (int) $member->id;
 
         if ($id === 0) {
             $this->tableGateway->insert($data);
             return;
         }
 
-        if (! $this->getAlbum($id)) {
+        if (! $this->getMember($id)) {
             throw new RuntimeException(sprintf(
-                'Cannot update album with identifier %d; does not exist',
+                'Cannot update member with identifier %d; does not exist',
                 $id
             ));
         }
@@ -57,7 +58,7 @@ class AlbumTable
         $this->tableGateway->update($data, ['id' => $id]);
     }
 
-    public function deleteAlbum($id)
+    public function deleteMember($id)
     {
         $this->tableGateway->delete(['id' => (int) $id]);
     }

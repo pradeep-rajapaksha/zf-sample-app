@@ -11,21 +11,11 @@
  * file.
  */
 
-// return [
-//     'db' => [
-//         'driver' => 'Pdo', 
-//         'dsn'    => sprintf('sqlite:%s/data/zftutorial.db', realpath(getcwd())),
-//     ],
-// ];
+return [
+    'db' => [
+        'driver' => 'Pdo',
+        'dsn'    => sprintf('sqlite:%s/data/zftutorial.db', realpath(getcwd())),
+    ],
+];
 
-return array(
-	'db' => array(
-		'driver'         => 'Pdo', 
-		'dsn'            => 'mysql:dbname=zftutorial;host=localhost;charset=utf8', 
-		),
-	'service_manager' => array(
-		'factories' => array(
-			'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-			),
-		),
-	);
+?>

@@ -1,5 +1,5 @@
 <?php 
-namespace Album;
+namespace Member;
 
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
@@ -17,15 +17,15 @@ class Module implements ConfigProviderInterface
     {
         return [
             'factories' => [
-                Model\AlbumTable::class => function($container) {
-                    $tableGateway = $container->get(Model\AlbumTableGateway::class);
-                    return new Model\AlbumTable($tableGateway);
+                Model\MemberTable::class => function($container) {
+                    $tableGateway = $container->get(Model\MemberTableGateway::class);
+                    return new Model\MemberTable($tableGateway);
                 },
-                Model\AlbumTableGateway::class => function ($container) {
+                Model\MemberTableGateway::class => function ($container) {
                     $dbAdapter = $container->get(AdapterInterface::class);
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Model\Album());
-                    return new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
+                    $resultSetPrototype->setArrayObjectPrototype(new Model\Member());
+                    return new TableGateway('member', $dbAdapter, null, $resultSetPrototype);
                 },
             ],
         ];
@@ -35,9 +35,9 @@ class Module implements ConfigProviderInterface
     {
         return [
             'factories' => [
-                Controller\AlbumController::class => function($container) {
-                    return new Controller\AlbumController(
-                        $container->get(Model\AlbumTable::class)
+                Controller\MemberController::class => function($container) {
+                    return new Controller\MemberController(
+                        $container->get(Model\MemberTable::class)
                     );
                 },
             ],

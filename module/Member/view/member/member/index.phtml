@@ -1,0 +1,29 @@
+<?php
+
+$title = 'GOT Memebers';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<p>
+    <a href="<?= $this->url('member', ['action' => 'add']) ?>">Add new member</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($members as $member) : ?>
+    <tr>
+        <td><?= $this->escapeHtml($member->id) ?></td>
+        <td><?= $this->escapeHtml($member->f_name) .' '. $this->escapeHtml($member->l_name) ?></td>
+        <td><?= $this->escapeHtml($member->address) ?></td>
+        <td>
+            <a href="<?= $this->url('member', ['action' => 'edit', 'id' => $member->id]) ?>">Edit</a>
+            <a href="<?= $this->url('member', ['action' => 'delete', 'id' => $member->id]) ?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
